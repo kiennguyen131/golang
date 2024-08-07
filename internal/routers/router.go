@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"net/http"
+	c "ecommerce-backend-api/init/internal/controller"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,15 +11,9 @@ func NewRouter() *gin.Engine {
 
 	v1 := r.Group("/v1/2024")
 	{
-		v1.GET("/ping/:name", Pong)
+		v1.GET("/ping/:name", c.NewPongController().Pong)
+		v1.GET("/user/1", c.NewUserController().GetUserByID)
 	}
 
 	return r
-}
-
-func Pong(c *gin.Context) {
-	name := c.Param("name")
-	c.JSON(http.StatusOK, gin.H{
-		"message": "pong...ping" + name,
-	})
 }
